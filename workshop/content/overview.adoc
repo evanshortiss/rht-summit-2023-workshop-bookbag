@@ -5,14 +5,54 @@
 :my_deep_var_underbars: {my_deep_var}
 :my_deep_var_dots: {my.deep.var}
 
-== Overview
+== Workshop Overview
 
-You can access environment variables as flattened `{}`-surrounded variables in these templated AsciiDoc files.
+Welcome to Red Hat Summit 2023, and the *Using GitOps to Control and Customize your Red Hat OpenShift Clusters and Applications* workshop!
 
-=== Variables from ENV as AsciiDoc attributes
+=== Getting Started
 
-NOTE: JSON objects are flattened and joined with a `.`.
-As a side-effect of the `.`, any character will match the `.` in the variable name.
+There are two key resources you will be using in this lab:
+
+* An OpenShift cluster with the OpenShift GitOps operator pre-installed.
+* Your own fork of the lab GitHub repository.
+
+The next two sections will walk you through getting access to these resources.
+
+==== Fork the Lab Repository on GitHub
+
+You'll need a GitHub account to complete this step. If you don't have one, go ahead and sign-up at https://github.com, then complete these steps:
+
+. Login to https://github.com.
+. Visit the lab repository at: https://github.com/evanshortiss/rht-summit-2023-gitops-cluster-mgmt
+. Use the **Fork** button in the upper-right corner of the GitHub UI to create your own copy of the repository.
+
+You should now have a copy of the repository at a unique URL of your own, i.e `https://github.com/$YOUR_GITHUB_ID/rht-summit-2023-gitops-cluster-mgmt`.
+
+==== Access your OpenShift Cluster
+
+You'll be using your own OpenShift cluster throughout this lab. Your cluster is pre-configured with the **OpenShift Web Terminal** and **Red Hat OpenShift GitOps** operators.
+
+The **Web Terminal** makes it easy to use pre-authenticated command-line tools (CLIs) to interact with the OpenShift APIs directly from the **OpenShift Web Console** in your web browser.
+
+By pre-installing the **Red Hat OpenShift GitOps** operator, we've saved a few minutes of time so you can fully focus on actually learning about GitOps instead of setting it up!
+
+To access your cluster's **OpenShift Web Console**:
+
+. Return to https://demo.redhat.com to obtain the URL, username, and password to access your cluster.
+. Visit the cluster URL in a web browser, and select the *htpasswd_provider* login option when prompted.
+. Login to your OpenShift cluster using the username and password provided by https://demo.redhat.com.
+
+The **Overview** page of the OpenShift Web Console is displayed after a successful login. From here you can perform both administrative and developer-focused tasks. 
+
+For now, verify that you can access the **Web Terminal**:
+
+. Verify that a terminal icon **>_** is shown in the top-right corner of the OpenShift Web Console.
+. Click the terminal icon. A new UI element will appear, and prepare a terminal session.
+. Once the terminal session is ready type the `help` command, and press enter. This will display the pre-installed CLIs that are available in this lab environment.
+. Run the `oc whoami` command in the Web Terminal and verify that the output is the same as the username you used to login to the OpenShift Web Console.
+. Run the `oc project openshift-gitops` and `oc get pods` (or `kubectl get pods`) commands to change context to the pre-configured `openshift-gitops` namespace, and confirm the **OpenShift GitOps** components all display a status of *Running*.
+
+Nice work.
 
 .Example: All of these function
 ----
