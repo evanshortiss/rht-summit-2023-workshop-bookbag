@@ -2,13 +2,50 @@
 :user: %user%
 :markup-in-source: verbatim,attributes,quotes
 
-== Exercise 2
+== Access the OpenShift Cluster's Argo CD Dashboard
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Nam quam arcu, accumsan eget ligula sed, aliquet vehicula felis.
-Aliquam aliquam pellentesque fringilla.
-Nam porttitor, orci vel cursus ultrices, diam dolor maximus metus, eget elementum felis ante vitae ex.
-Mauris ligula eros, venenatis eu tincidunt eu, pulvinar vitae lectus.
-Aliquam facilisis lectus viverra vestibulum ornare.
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-Etiam accumsan efficitur sapien.
+=== Obtain the Argo CD Admin Password
+
+Now that you've gotten access to your OpenShift cluster and confirmed that the **Red Hat OpenShift GitOps** components are up and running, it's time to access the Argo CD dashboard.
+
+First, obtain the Argo CD _admin_ user's password from the `openshift-gitops-cluster` https://kubernetes.io/docs/concepts/configuration/secret/[Secret]:
+
+. Open the **Web Terminal** using the **>_** icon in the top-right corner of the **OpenShift Web Console**.
+. Run the following command to get the Argo CD admin password from the *openshift-gitops-cluster* [Secret](https://kubernetes.io/docs/concepts/configuration/secret/) in plaintext:
+    ```
+    kubectl get secret openshift-gitops-cluster \
+    -o json \
+    -n openshift-gitops |\
+    jq '.data["admin.password"]' -r |\
+    base64 --decode
+    ```
+. Make a note of the password. You'll need it in a moment.
+
+Note, that you can also view the _admin_ user's password using the OpenShift Web Console by:
+
+. Selecting the **Administrator** perspective from the side-menu.
+. Clicking to **Workloads > Secrets** link in the side-menu.
+. Viewing the `openshift-gitops-cluster` Secret, and clicking **Reveal Values**.
+
+[NOTE]
+====
+In case you're wondering, you can view the `openshift-gitops-cluster` and other Secrets since you're using a user with _cluster-admin_ permissions. By default new OpenShift users will have limited permissions, and RBAC configuration is necessary to grant access to resources they should have access to. 
+====
+
+=== Access the Argo CD Dashboard
+
+. Expand the **Application Launcher** icon (3x3 sqaure) in the top-right of the **OpenShift Web Console**.
+. Click the **Cluster Argo CD** link. This will open a new browser tab.
+. Accept the self-signed certificate warning.
+. Ignore the **Log in via OpenShift** button!
+. Login using the username `admin` and the password you obtained in the last section.
+
+The Argo CD dashboard will be displayed, and state that you have "no applications yet". We'll take care of that in the next section!
+
+== Summary
+
+Excellent! You learned how to:
+
+* Access https://kubernetes.io/docs/concepts/configuration/secret/[Secrets] using the `oc`/`kubectl` CLI, or using the OpenShift Web Console.
+* Use the Web Terminal to execute commands using the `oc` (OpenShift) and `kubectl` (Kubernetes) CLIs.
+* Access the Argo CD dashboard.
