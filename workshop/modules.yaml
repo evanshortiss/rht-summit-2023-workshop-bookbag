@@ -4,10 +4,10 @@ modules:
     name: Overview
     exit_sign: Continue
   exercise1:
-    name: Exercise 1
+    name: Getting Started
     exit_sign: Continue
   exercise2:
-    name: Exercise 2
+    name: Access the OpenShift Cluster's Argo CD Dashboard
     exit_sign: Continue
   exercise3:
     name: Exercise 3

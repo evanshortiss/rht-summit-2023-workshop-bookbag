@@ -2,8 +2,6 @@
 :user: %user%
 :markup-in-source: verbatim,attributes,quotes
 
-== Getting Started
-
 There are two key resources you will be using in this lab:
 
 * An OpenShift cluster with the OpenShift GitOps operator pre-installed.

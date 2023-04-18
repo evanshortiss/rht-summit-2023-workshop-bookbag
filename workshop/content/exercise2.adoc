@@ -2,23 +2,25 @@
 :user: %user%
 :markup-in-source: verbatim,attributes,quotes
 
-== Access the OpenShift Cluster's Argo CD Dashboard
+Now that you've gotten access to your OpenShift cluster and confirmed that the **Red Hat OpenShift GitOps** components are up and running, it's time to access the Argo CD dashboard.
+
+The Argo CD dashboard supports logins via the identity providers registered with the OpenShift cluster, or login using username and password. In this tutorial you'll be using the Argo CD _admin_ user.
 
 === Obtain the Argo CD Admin Password
-
-Now that you've gotten access to your OpenShift cluster and confirmed that the **Red Hat OpenShift GitOps** components are up and running, it's time to access the Argo CD dashboard.
 
 First, obtain the Argo CD _admin_ user's password from the `openshift-gitops-cluster` https://kubernetes.io/docs/concepts/configuration/secret/[Secret]:
 
 . Open the **Web Terminal** using the **>_** icon in the top-right corner of the **OpenShift Web Console**.
 . Run the following command to get the Argo CD admin password from the *openshift-gitops-cluster* [Secret](https://kubernetes.io/docs/concepts/configuration/secret/) in plaintext:
-    ```
-    kubectl get secret openshift-gitops-cluster \
-    -o json \
-    -n openshift-gitops |\
-    jq '.data["admin.password"]' -r |\
-    base64 --decode
-    ```
++
+[source,bash]
+----
+kubectl get secret openshift-gitops-cluster \
+-o json \
+-n openshift-gitops |\
+jq '.data["admin.password"]' -r |\
+base64 --decode
+----
 . Make a note of the password. You'll need it in a moment.
 
 Note, that you can also view the _admin_ user's password using the OpenShift Web Console by:
