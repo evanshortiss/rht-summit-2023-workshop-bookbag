@@ -19,30 +19,41 @@ kubectl get secret openshift-gitops-cluster \
 -o json \
 -n openshift-gitops |\
 jq '.data["admin.password"]' -r |\
-base64 --decode
+base64 --decode | xargs echo
 ----
 . Make a note of the password. You'll need it in a moment.
+
+image:images/ex2.openshift-terminal-argo-secret.png[]
 
 Note, that you can also view the _admin_ user's password using the OpenShift Web Console by:
 
 . Selecting the **Administrator** perspective from the side-menu.
+. Selecting _openshift-gitops_ in the *Project* dropdown.
 . Clicking to **Workloads > Secrets** link in the side-menu.
-. Viewing the `openshift-gitops-cluster` Secret, and clicking **Reveal Values**.
+. Viewing the _openshift-gitops-cluster_ Secret, and clicking **Reveal Values**.
+
+An image showing the Secrets section of the OpenShift Web Console is shown below.
+
+image::images/ex2.openshift-ui-secret.png[]
 
 [NOTE]
 ====
-In case you're wondering, you can view the `openshift-gitops-cluster` and other Secrets since you're using a user with _cluster-admin_ permissions. By default new OpenShift users will have limited permissions, and RBAC configuration is necessary to grant access to resources they should have access to. 
+In case you're wondering, you can view the `openshift-gitops-cluster` and other Secrets since you're using a user with _cluster-admin_ permissions. By default new OpenShift users will have limited permissions and will be unable to view resources such as Secrets. RBAC configuration is necessary to grant access to resources that OpenShift users should have access to. You'll learn more about this in subsequent sections of this lab.
 ====
 
 == Access the Argo CD Dashboard
 
 . Expand the **Application Launcher** icon (3x3 sqaure) in the top-right of the **OpenShift Web Console**.
++
+image::images/ex2.openshift-ui-argo-link.png[]
 . Click the **Cluster Argo CD** link. This will open a new browser tab.
 . Accept the self-signed certificate warning.
 . Ignore the **Log in via OpenShift** button!
 . Login using the username `admin` and the password you obtained in the last section.
 
 The Argo CD dashboard will be displayed, and state that you have "no applications yet". We'll take care of that in the next section!
+
+image::images/ex2.argo-dashboard.png[]
 
 == Summary
 

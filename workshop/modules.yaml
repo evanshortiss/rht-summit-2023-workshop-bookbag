@@ -7,10 +7,16 @@ modules:
     name: Getting Started
     exit_sign: Continue
   exercise2:
-    name: Access the OpenShift Cluster's Argo CD Dashboard
+    name: Accessing Argo CD Dashboard
     exit_sign: Continue
   exercise3:
-    name: Exercise 3
+    name: Your First Application using OpenShift GitOps
+    exit_sign: Continue
+  exercise4:
+    name: Managing Namespaces using OpenShift GitOps
+    exit_sign: Continue
+  exercise5:
+    name: Self-Healing Applications with OpenShift GitOps
     exit_sign: Continue
   review:
     name: Review
