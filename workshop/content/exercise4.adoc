@@ -1,5 +1,6 @@
+// Managing Namespaces using OpenShift GitOps
 
-https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/[Namespaces] can be used to provide isolation, and divide resources between different teams within a Kubernetes cluster. For example, two teams could each be given a Namespace within a cluster to deploy their applications. Each Namespace can have a set amount of CPU and memory allocated to it depending on the requirements of the software each team is building and deploying. The members of each team might only have access to their own Namespace.
+https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/[Namespaces] can be used to provide isolation, and divide resources between different teams within a Kubernetes cluster. For example, two teams could each be given a Namespace within a cluster to deploy their applications. Each Namespace can have a set amount of CPU and memory allocated to it depending on the requirements of the software each team is building and deploying. The members of each team might only have access to their own Namespace and no additional namespaces.
 
 In this section, you'll create two Namespaces based on a shared template. Of course you'll want each Namespace to have a unique name, and custom https://kubernetes.io/docs/concepts/policy/resource-quotas/[ResourceQuotas] and https://kubernetes.io/docs/concepts/policy/limit-range/[LimitRanges] depending on the workloads being deployed within them. You'll learn how to extend and patch YAML files using https://kustomize.io/[Kustomise]. Argo CD supports both Kustomize and Helm for scenarios where generating YAML is necessary.
 
@@ -27,8 +28,8 @@ These files are referred to as *bases* or the *base* files to be used by Kustomi
 == Define a Namespace using Overlays
 
 . Navigate to the GitHub IDE for your repository.
-. Create a new folder named `project-foo` in _namespaces/resources/overlays/_. This folder will contain your namespace configuration.
-. Create a file named `kustomization.yaml` in the _namespaces/resources/overlays/project-foo_ folder.
+. Create a *folder* named `project-foo` in _namespaces/resources/overlays/_. This folder will contain your namespace configuration.
+. Create a *file* named `kustomization.yaml` in the _namespaces/resources/overlays/project-foo_ folder.
 . Place the following content in _namespaces/resources/overlays/project-foo/kustomization.yaml_. This will use the base files, but replace the default namespace value with `project-foo`:
 +
 [source,yaml]
@@ -72,11 +73,11 @@ You now have everything you need to have Argo CD synchronise files and create a 
 
 == Create your Argo CD Application from a Terminal
 
-You'll create a new Argo CD Application to manage your namespaces using the `oc` or `kubectl`:
+You'll create a new Argo CD Application to manage your namespaces using the `oc` or `kubectl` CLIs:
 
 . Login to your OpenShift cluster in your web browser.
 . Open the **Web Terminal** using the **>_** icon in the top-right corner of the **OpenShift Web Console**.
-. Execute the following commands to create your Argo CD Application that will create and manage your Namespace.
+. Execute the following commands (being sure to change the `GITHUB_USERNAME` to your own username) to create your Argo CD Application that will create and manage your Namespace.
 +
 [source,bash]
 ----
@@ -93,7 +94,7 @@ image:images/ex4.argocd-out-of-sync.png[]
 
 The synchronisation failed because the https://kubernetes.io/docs/concepts/security/service-accounts/[Service Account] used by Argo CD to communicate the the Kubernetes/OpenShift API doesn't have the necessary permissions to manage ResourceQuotas and LimitRanges.
 
-This class of error can be addressed by explicitly granting the Argo CD Service Account the required permissions to manage resources at the cluster-level using https://kubernetes.io/docs/reference/access-authn-authz/rbac/[ClusterRoles and ClusterRoleBindings]. 
+This class of error can be addressed by explicitly granting the Argo CD Service Account the required permissions to manage resources at the cluster-level using Kubernetes https://kubernetes.io/docs/reference/access-authn-authz/rbac/[ClusterRoles and ClusterRoleBindings]. 
 
 == Granting Cluster-Level Permissions to Argo CD
 
@@ -112,6 +113,11 @@ oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:opens
 
 The Application will report *Healthy* and *Synced* status. This is because the Argo CD Service Account was able to synchronise all the resources thanks to having cluster administrative privileges. 
 
+[NOTE]
+====
+The `adm` subcommand provided by the OpenShift (`oc`) CLI is a utility that provides useful commands for OpenShift administrators. You can read more about it in the https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/administrator-cli-commands.html[OpenShift CLI administrator command reference].
+====
+
 == Accessing your Namespace as a Non-Admin User
 
 At this point, you've successfully created a Namespace by synchronising resources using Argo CD. Verify that you can access it:
@@ -122,7 +128,7 @@ At this point, you've successfully created a Namespace by synchronising resource
 +
 [NOTE]
 ====
-A Project in OpenShift is a Kubernetes Namespace with some extra annotations. For all intents and purposes, you can treat "Project" as analogous to "Namespace". 
+A Project in OpenShift is a Kubernetes Namespace with some extra annotations. For all intents and purposes, you can treat an OpenShift "Project" as analogous to a "Namespace" during this workshop. 
 ====
 . Find the `project-foo` Namespace as shown.
 +

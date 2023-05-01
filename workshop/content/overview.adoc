@@ -9,7 +9,7 @@
 
 Welcome to Red Hat Summit 2023, and the *Using GitOps to Control and Customize your Red Hat OpenShift Clusters and Applications* workshop!
 
-This lab provides an environment and set of exercises where you will learn how to use *Red Hat OpenShift GitOps* to manage aspects of an *Red Hat OpenShift* cluster, and applications on said cluster.
+This lab provides an environment and set of exercises where you will learn how to use *Red Hat OpenShift GitOps* to manage aspects of an *Red Hat OpenShift* cluster. You'll also learn how to enable teams to independently manage their applications on the OpenShift cluster too.
 
 === What is OpenShift?
 
@@ -21,7 +21,10 @@ https://www.redhat.com/en/topics/devops/what-is-gitops[GitOps] is a declarative 
 
 === What is Red OpenShift GitOps
 // From https://docs.openshift.com/container-platform/4.12/cicd/gitops/understanding-openshift-gitops.html
-https://docs.openshift.com/container-platform/4.12/cicd/gitops/understanding-openshift-gitops.html[Red Hat OpenShift GitOps] is built on https://argo-cd.readthedocs.io/en/stable/[Argo CD]. Argo CD is an open-source declarative tool for the continuous integration and continuous deployment (CI/CD) of applications. 
+https://docs.openshift.com/container-platform/4.12/cicd/gitops/understanding-openshift-gitops.html[Red Hat OpenShift GitOps] is built on https://argo-cd.readthedocs.io/en/stable/[Argo CD]. Argo CD is an open-source tool that enables the continuous delivery of applications. Put simply, when using Argo CD you store and manage your configurations using Git repositories and the resources in those repositories are synchronised to your OpenShift/Kubernetes clusters by Argo CD.
+
+[.text-center]
+image:images/ex4.argo-kustomize.png[ArgoCD Overview, 800]
 
 Red Hat OpenShift GitOps implements Argo CD as a controller so that it continuously monitors application definitions and configurations defined in a Git repository. Then, Argo CD compares the specified state of these configurations with their live state on the cluster. Argo CD reports any configurations that deviate from their specified state. These reports allow administrators to automatically or manually resync configurations to the defined state. Therefore, Argo CD enables you to deliver global custom resources, like the resources that are used to configure OpenShift clusters.
 

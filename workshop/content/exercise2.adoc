@@ -1,8 +1,6 @@
-:guid: %guid%
-:user: %user%
-:markup-in-source: verbatim,attributes,quotes
+// Accessing Argo CD Dashboard
 
-Now that you've gotten access to your OpenShift cluster and confirmed that the **Red Hat OpenShift GitOps** components are up and running, it's time to access the Argo CD dashboard.
+Now that you've gotten access to your OpenShift cluster and confirmed that the Red Hat OpenShift GitOps components are up and running, it's time to access the Argo CD dashboard.
 
 The Argo CD dashboard supports logins via the identity providers registered with the OpenShift cluster, or login using username and password. In this tutorial you'll be using the Argo CD _admin_ user.
 
@@ -47,7 +45,7 @@ In case you're wondering, you can view the `openshift-gitops-cluster` and other 
 +
 image::images/ex2.openshift-ui-argo-link.png[]
 . Click the **Cluster Argo CD** link. This will open a new browser tab.
-. Accept the self-signed certificate warning.
+. Accept the self-signed certificate warning if one appears. The login page will now appear.
 . Ignore the **Log in via OpenShift** button!
 . Login using the username `admin` and the password you obtained in the last section.
 

@@ -21,11 +21,10 @@ You should now have a copy of the repository at a unique URL of your own, i.e `h
 
 == Access your OpenShift Cluster
 
-You'll be using your own OpenShift cluster throughout this lab. Your cluster is pre-configured with the **OpenShift Web Terminal** and **Red Hat OpenShift GitOps** operators.
+You'll be using your own OpenShift cluster throughout this lab. Your cluster is pre-configured with the **OpenShift Web Terminal** and **Red Hat OpenShift GitOps** Operators. You can think of Operators as addons to an OpenShift or Kubernetes cluster that provide it with extended features/capabilities:
 
-The **Web Terminal** makes it easy to use pre-authenticated command-line tools (CLIs) to interact with the OpenShift APIs directly from the **OpenShift Web Console** in your web browser.
-
-By pre-installing the **Red Hat OpenShift GitOps** operator, we've saved a few minutes of time so you can fully focus on actually learning about GitOps instead of setting it up!
+    * The **Web Terminal** makes it easy to use pre-authenticated command-line tools (CLIs) to interact with the OpenShift APIs directly from the **OpenShift Web Console** in your web browser.
+    * Pre-installing the **Red Hat OpenShift GitOps** operator saved a few minutes of time so you can fully focus on actually learning about GitOps instead of setting it up!
 
 To access your cluster's **OpenShift Web Console**:
 
@@ -42,6 +41,8 @@ From the **OpenShift Web Console** you just accessed:
 . Verify that a terminal icon **>_** is shown in the top-right corner of the OpenShift Web Console.
 . Click the terminal icon. A new UI element will appear, and prepare a terminal session.
 . Once the terminal session is ready type the `help` command, and press enter. This will display the pre-installed CLIs that are available in this lab environment.
++
+image:images/ex1.web-terminal.png[]
 . Run the `oc whoami` command in the Web Terminal and verify that the output is the same as the username you used to login to the OpenShift Web Console.
 . Run the `oc project openshift-gitops` and `oc get pods` (or `kubectl get pods`) commands to change context to the pre-configured `openshift-gitops` namespace, and confirm the **OpenShift GitOps** components all display a status of *Running*.
 

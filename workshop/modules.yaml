@@ -7,16 +7,22 @@ modules:
     name: Getting Started
     exit_sign: Continue
   exercise2:
-    name: Accessing Argo CD Dashboard
+    name: Accessing the Cluster GitOps Dashboard
     exit_sign: Continue
   exercise3:
-    name: Your First Application using OpenShift GitOps
+    name: First Steps with GitOps using Argo CD
     exit_sign: Continue
   exercise4:
-    name: Managing Namespaces using OpenShift GitOps
+    name: Using GitOps to Manage Namespaces
     exit_sign: Continue
   exercise5:
-    name: Self-Healing Applications with OpenShift GitOps
+    name: Self-Healing features of Argo CD
+    exit_sign: Continue
+  exercise6:
+    name: Managing Projects and RBAC in Argo CD
+    exit_sign: Continue
+  exercise7:
+    name: Continuous Delivery of a Containerised Application
     exit_sign: Continue
   review:
     name: Review
