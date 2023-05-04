@@ -1,11 +1,9 @@
-:guid: %guid%
-:user: %user%
-:markup-in-source: verbatim,attributes,quotes
+_Estimated Time: 5-10 Minutes_
 
 There are two key resources you will be using in this lab:
 
 * An OpenShift cluster with the OpenShift GitOps operator pre-installed.
-* Your own fork of the lab GitHub repository.
+* Your own fork of the workshop Git repository.
 
 The next two sections will walk you through getting access to these resources.
 
@@ -19,6 +17,11 @@ You'll need a GitHub account to complete this step. If you don't have one, go ah
 
 You should now have a copy of the repository at a unique URL of your own, i.e `https://github.com/$YOUR_GITHUB_ID/rht-summit-2023-gitops-cluster-mgmt`.
 
+[NOTE]
+====
+You'll be asked to use this repository throughout the workshop. Make sure to always use *your forked* version, *not* the original one owned by evanshortiss on GitHub!
+====
+
 == Access your OpenShift Cluster
 
 You'll be using your own OpenShift cluster throughout this lab. Your cluster is pre-configured with the **OpenShift Web Terminal** and **Red Hat OpenShift GitOps** Operators. You can think of Operators as addons to an OpenShift or Kubernetes cluster that provide it with extended features/capabilities:
@@ -30,13 +33,16 @@ To access your cluster's **OpenShift Web Console**:
 
 . Return to https://demo.redhat.com to obtain the URL, username, and password to access your cluster.
 . Visit the cluster URL in a web browser, and select the *htpasswd_provider* login option when prompted.
+// TODO: fix this image to show "htpasswd_provider" instead of "developer"
++
+image:images/ex1.openshift-login-screen.png[]
 . Login to your OpenShift cluster using the username and password provided by https://demo.redhat.com.
 
 The **Overview** page of the OpenShift Web Console is displayed after a successful login. From here you can perform both administrative and developer-focused tasks. 
 
 == Access the OpenShift Web Terminal
 
-From the **OpenShift Web Console** you just accessed:
+From the OpenShift Web Console you just accessed:
 
 . Verify that a terminal icon **>_** is shown in the top-right corner of the OpenShift Web Console.
 . Click the terminal icon. A new UI element will appear, and prepare a terminal session.

@@ -9,7 +9,17 @@
 
 Welcome to Red Hat Summit 2023, and the *Using GitOps to Control and Customize your Red Hat OpenShift Clusters and Applications* workshop!
 
-This lab provides an environment and set of exercises where you will learn how to use *Red Hat OpenShift GitOps* to manage aspects of an *Red Hat OpenShift* cluster. You'll also learn how to enable teams to independently manage their applications on the OpenShift cluster too.
+This workshop provides you with your own *Red Hat OpenShift* cluster, and set of exercises that teach you how to use *Red Hat OpenShift GitOps* to manage aspects of your *Red Hat OpenShift* cluster and containerised applications.
+
+By the end of this lab you will know how to:
+
+* Access the Red Hat OpenShift GitOps (Argo CD) Dashboard on a Red Hat OpenShift cluster.
+* Customise the OpenShift Web Console using GitOps.
+* Manage Namespaces, Resource Quotas, and RBAC using GitOps.
+* Keep configurations in a desired state using GitOps.
+* Enable teams to leverage GitOps to deploy their applications.
+* Continuously Deliver a containerised application using GitOps.
+* (Optional) Use the the "App of Apps" pattern to bootstrap a cluster using GitOps.
 
 === What is OpenShift?
 

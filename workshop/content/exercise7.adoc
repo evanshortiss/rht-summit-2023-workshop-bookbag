@@ -1,6 +1,16 @@
-The moment of truth! Time to stretch your developer legs as the `foo` user, and have Argo CD continuously deploy your application.
 
-For this section of the workshop you'll be using https://github.com/evanshortiss/rht-summit-2023-sample-application[this repository on GitHub]. The linked repository contains a simple Node.js web application that renders a web page containing a randomly chosen meme. The repository also contains a set of resources in the _k8s/_ directory that will be used to deploy the application on OpenShift. You're going to deploy this application into the `project-foo` namespace, then make an update to the application that passes CI checks and observe how Argo CD detects the new changes and automatically deploys them to complete the CI/CD flow.
+⏱️ _Estimated Time: 15 Minutes_
+
+👨‍💻 _Role: Developer_
+
+The moment of truth! Time to stretch your developer legs as the `foo` user, and have Argo CD continuously deploy your application into the development environment. In this section your no longer acting as a cluster administrator, but are instead acting playing the role of the developer that you've been configuring access for up to this point.
+
+For this section of the workshop you'll be using https://github.com/evanshortiss/rht-summit-2023-sample-application[this repository on GitHub]. The linked repository contains a simple Node.js web application that renders a web page containing a randomly chosen meme. The repository also contains a set of resources in the _k8s/_ directory that will be used to deploy the application on OpenShift. You're going to deploy this application into the `project-memes-dev` namespace, then make an update to the application that passes CI checks and observe how Argo CD detects the new changes and automatically deploys them to complete the CI/CD flow.
+
+[NOTE]
+====
+Separating the OpenShift/Kubernetes resources and source code for an application into separate repositories is a common approach. To reduce the number of repositories you need to manage this lab has placed both the source code and OpenShift/Kubernetes resources in this one repository.
+====
 
 == Login to Argo CD as a Developer User
 
@@ -13,7 +23,7 @@ If you're not already logged into the Argo CD dashboard as the `foo` user:
     * Click the *Log in* button.
 . Expand the *Application Launcher* icon (3x3 sqaure) in the top-right of the OpenShift Web Console.
 +
-image::images/ex2.openshift-ui-argo-link.png[]
+image::images/ex6.openshift-ui-argo-link.png[]
 . Click the **Cluster Argo CD** link. This will open a new browser tab.
 . Accept the self-signed certificate warning if one appears. The login page will now appear.
 . Click the **Log in via OpenShift** button.
@@ -21,23 +31,26 @@ image::images/ex2.openshift-ui-argo-link.png[]
 
 == Create the Random Meme Application
 
-As the `foo` user, you have permission to create an Application that targets the `project-foo` Namespace in the `in-cluster` destination. You observed this in the prior exercise by viewing the `project-foo-dev` in the *Projects* section in the *Settings* screen.
+As the `foo` user, you have permission to create an Application that targets the `project-memes-dev` Namespace in the `in-cluster` destination. You observed this in the prior exercise by viewing the `project-memes` in the *Projects* section in the *Settings* screen.
 
 image:images/ex7.argocd-project-settings.png[]
 
 Create an Argo CD Application to manage your containerised random meme web application:
 
-. Visit the https://github.com/evanshortiss/rht-summit-2023-sample-application[random-meme application repository] and fork it to your GitHub account.
+. Visit the https://github.com/evanshortiss/rht-summit-2023-sample-application[random-meme application repository].
+. Click the *Use this template* button and select *Create a new repository* from the list of options. Enter `rht-summit-2023-sample-application` as the repository name.
++
+image:images/ex7.gh-use-template.png[]
 . Navigate to the Argo CD dashboard.
 . Click the *New App* button. 
 . Fill in the form with the following information:
-    * Application Name: `random-meme`
+    * Application Name: `random-meme-dev`
     * Project: `project-foo-dev`
     * Sync Policy: `Automatic`
     * Prune Resources: `Enabled`
     * Self Heal: `Enabled`
-    * Repository URL: `https://github.com/REPLACE_ME/rht-summit-2023-sample-application` (use your fork's URL!)
-    * Path: `k8s`
+    * Repository URL: `https://github.com/REPLACE_ME/rht-summit-2023-sample-application` (use your repositories URL!)
+    * Path: `k8s/overlays/development`
     * Cluster URL: `https://kubernetes.default.svc`
     * Namespace: `project-foo` (Using any other value will result in an error. Feel free to try a different value to see what happens!)
 . After filling out these details you can switch to the YAML view and confirm that it matches this screenshot:
@@ -56,7 +69,7 @@ Now that your containerised application has been deployed, go see what it does!
 . Return to the OpenShift Web Console. Log in as either `foo` or `opentlc-mgr` user.
 . Switch to the *Developer* perspective using the *Perspective Switcher*.
 . Click the *Topology* link in the side-menu.
-. Select the `project-foo` from the *Project* dropdown.
+. Select the `project-memes-dev` from the *Project* dropdown.
 . Click on the Node.js application in the topology. The application's details will appear on the right.
 +
 image:images/ex7.openshift-topology.png[]
@@ -66,9 +79,9 @@ image:images/ex7.random-meme.png[]
 
 == Making a Code Change and Triggering the Continuous Integration (CI) Process 
 
-Nice work on getting the application deployed on OpenShift! Now you'll make a change to the application, verify it passes CI, merge the change into the `main` (production) branch and watch as Argo CD detects and applies the new change.
+Nice work on getting the application deployed on OpenShift! Now you'll make a change to the application's dev environment configuration, verify it passes CI, merge the change into the `main` branch and watch as Argo CD detects and applies the new change.
 
-. Head over to *your fork* of the https://github.com/evanshortiss/rht-summit-2023-sample-application[random-meme application repository].
+. Head over to *your copy* of the https://github.com/evanshortiss/rht-summit-2023-sample-application[random-meme application repository].
 . Use the period/dot key as a shortcut to open the GitHub IDE.
 . Once the GitHub IDE has loaded:
     * Click the branch name (`main` by default) in the bottom left.
@@ -78,7 +91,7 @@ Nice work on getting the application deployed on OpenShift! Now you'll make a ch
 . Use the following image as a guide for completing the prior steps:
 +
 image:images/ex7.gh-new-branch.png[]
-. Add a new image to the _k8s/config-map.yaml_ file. You can use the URL of any image that you like.
+. Add a new image to the _k8s/overlays/development/config-map.yaml_ file. You can use the URL of any image that you like.
 . Select the *Source Control* view from the side-menu.
 . Enter a commit message and push your change. 
 +
@@ -104,7 +117,7 @@ Once the CI checks have passed move on to the next section.
 
 == Observing the Continuous Deployment (CD) Process
 
-Your pull request should be ready to merge now. After merging the pull request, Argo CD will notice the changes within 3 minutes (default polling interval), and apply the new ConfigMap to your `project-foo` Namespace.
+Your pull request should be ready to merge. After merging the pull request, Argo CD will notice the changes within 3 minutes (default polling interval), and apply the new ConfigMap to your `project-foo` Namespace.
 
 [NOTE]
 ====
@@ -121,7 +134,7 @@ Once the pull request has been merged, take a look in the Argo CD dashboard. The
 
 [NOTE]
 ====
-You can use the *Refresh* button in Argo CD to force it to check the Git repository for changes, if you don't want to wait
+You can use the *Refresh* button in Argo CD to force it to check the Git repository for changes, if you don't want to wait.
 ====
 
 image:images/ex7.argo-post-merge.png[]
