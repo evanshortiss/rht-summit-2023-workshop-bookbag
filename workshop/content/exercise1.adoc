@@ -3,23 +3,26 @@
 There are two key resources you will be using in this lab:
 
 * An OpenShift cluster with the OpenShift GitOps operator pre-installed.
-* Your own fork of the workshop Git repository.
+* Your own copy of the workshop Git repository.
 
 The next two sections will walk you through getting access to these resources.
 
-== Fork the Lab Repository on GitHub
+== Copying the Lab Repository on GitHub
 
 You'll need a GitHub account to complete this step. If you don't have one, go ahead and sign-up at https://github.com, then complete these steps:
 
 . Login to https://github.com.
 . Visit the lab repository at: https://github.com/evanshortiss/rht-summit-2023-gitops-cluster-mgmt
-. Use the **Fork** button in the upper-right corner of the GitHub UI to create your own copy of the repository.
+. Click the **Use this template** button in the upper-right corner of the Git repository. A list of options will be displayed.
+. Select the *Create a new repository* option.
+. Enter `rht-summit-2023-gitops-cluster-mgmt` in the *Repository name* field.
+. Click the *Create repository from template* button.
 
 You should now have a copy of the repository at a unique URL of your own, i.e `https://github.com/$YOUR_GITHUB_ID/rht-summit-2023-gitops-cluster-mgmt`.
 
 [NOTE]
 ====
-You'll be asked to use this repository throughout the workshop. Make sure to always use *your forked* version, *not* the original one owned by evanshortiss on GitHub!
+You'll be asked to use this repository throughout the workshop. Make sure to always use *your copy*, and *not* the original one owned by _evanshortiss_ on GitHub!
 ====
 
 == Access your OpenShift Cluster
