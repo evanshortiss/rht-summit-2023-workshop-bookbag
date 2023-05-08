@@ -87,7 +87,7 @@ image:images/ex4.github-ide-namespace-files.png[]
 . Edit the `spec.source.repoURL` in _etc/managed-namesapces.application.yaml_ to point to your fork's URL.
 +
 image:images/ex4.github-ide-application-cr.png[]
-. Use the **Source Control* section of the GitHub editor to enter a commit message, then press *Commit & Push*.
+. Use the *Source Control* section of the GitHub editor to enter a commit message, then press *Commit & Push*.
 +
 image:images/ex4.github-ide-commit.png[]
 
@@ -189,7 +189,7 @@ Great! Now try doing the same thing again, but as a user without the `cluster-ad
 
 image:images/ex4.openshift-ui-foo-no-projects.png[]
 
-You'll need to grant some permissions to the user named *foo* so they can interacts with the Namespace you just created. You can grant roles to users for a specific Namespace using a https://docs.openshift.com/container-platform/4.12/rest_api/role_apis/rolebinding-authorization-openshift-io-v1.html[RoleBinding] CR:
+You'll need to grant some permissions to the user named *foo* so they can interact with the Namespace you just created. You can grant roles to users for a specific Namespace using a https://docs.openshift.com/container-platform/4.12/rest_api/role_apis/rolebinding-authorization-openshift-io-v1.html[RoleBinding] CR:
 
 . Open your fork of the lab GitHub repository, and open the GitHub editor using the period/dot shortcut key. 
 . Create a file named _role.yaml_ in the _managed-namespaces/overlays/project-memes-dev_ directory, and add the following content to the file:
@@ -228,7 +228,7 @@ image:images/ex4.github-ide-role-namespace.png[]
 . Commit and push the change using the *Source Control* section of the GitHub editor.
 . Return to the Argo CD dashboard and wait for the *managed-namespaces* project to synchronise, or use the *Refresh* button to trigger a Git pull and synchronisation.
 
-Once the synchronisation is complete, the *foo* user should be able to view and interact with the *project-foo* Namespace:
+Once the synchronisation is complete, the *foo* user should be able to view and interact with the *project-memes-dev* Namespace:
 
 image:images/ex4.openshift-ui-foo-edit-dev.png[]
 

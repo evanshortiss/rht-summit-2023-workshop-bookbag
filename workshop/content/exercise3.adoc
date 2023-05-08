@@ -11,7 +11,7 @@ The https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#
 
 Let's take a look at an example of an Application CR:
 
-. Visit _*your fork*_ of the https://github.com/evanshortiss/rht-summit-2023-gitops-cluster-mgmt[lab repository] in a web browser.
+. Visit *your fork* of the https://github.com/evanshortiss/rht-summit-2023-gitops-cluster-mgmt[lab repository] in a web browser.
 . Find and open the _etc/console-customisations.application.yaml_ file. 
 // TODO REPLACE THIS SCREENSHOT
 +
@@ -27,7 +27,7 @@ image:images/ex3.github-ide.png[]
 The concept of a Project in Argo CD is separate to the concept of an OpenShift Project. You'll learn more about these in subsequent sections of this workshop.
 ====
 
-You'll use the _console-customisations.application.yaml _ file to create your first Application in Argo CD!
+You'll use the _console-customisations.application.yaml_ file to create your first Application in Argo CD!
 
 == Create an Argo CD Application using the Argo CD UI
 
@@ -39,7 +39,7 @@ The Application CR you examined in the prior section will be put to use now. Imp
 +
 image:images/ex3.argo-dashboard-create.png[]
 . Replace the pre-defined YAML template with the contents of your _console-customisations.application.yaml_ from your GitHub repository.
-. Edit the `spec.source.repoURL` field in the YAML to match the URL of _*your fork*_ of the repository.
+. Edit the `spec.source.repoURL` field in the YAML to match the URL of *your fork* of the repository.
 +
 image:images/ex3.argo-dashboard-yaml.png[]
 . Click **Save**. Did you notice that the form has been updated to match the values that were defined in your YAML?

@@ -33,10 +33,9 @@ To access your cluster's **OpenShift Web Console**:
 
 . Return to https://demo.redhat.com to obtain the URL, username, and password to access your cluster.
 . Visit the cluster URL in a web browser, and select the *htpasswd_provider* login option when prompted.
-// TODO: fix this image to show "htpasswd_provider" instead of "developer"
 +
 image:images/ex1.openshift-login-screen.png[]
-. Login to your OpenShift cluster using the username and password provided by https://demo.redhat.com.
+. Login to your OpenShift cluster using the username and password provided by https://demo.redhat.com. The username should be `opentlc-mgr` and the password should be `r3dh4t1!`.
 
 The **Overview** page of the OpenShift Web Console is displayed after a successful login. From here you can perform both administrative and developer-focused tasks. 
 

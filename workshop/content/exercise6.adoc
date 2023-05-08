@@ -12,7 +12,7 @@ In this section you'll learn how to manage user groups in OpenShift, and how to 
 
 So far you've been using the `admin` user to interact with Argo CD. Try using the user `foo` instead:
 
-. Open a private browser session in your web browser.
+. Open a private browsing session.
 +
 [NOTE]
 ====
@@ -66,92 +66,14 @@ In short, the `foo` user was automatically granted a `readonly` role. You can co
 oc get cm argocd-rbac-cm -o yaml -n openshift-gitops
 ----
 
-== Create a Project with Customised RBAC
+== Next Steps
 
-Earlier in this workshop you created some managed Namespaces and applied a ResourceQuota to them, but didn't deploy any resources into those Namespaces. That's because you were acting as an administrator, configuring Namespaces and OpenShift access for development teams. 
+Now that you've seen that Argo CD enforces RBAC, you'll need to create new Projects and grant OpenShift users access to them. This involves associating users in specific https://docs.openshift.com/container-platform/4.12/rest_api/user_and_group_apis/group-user-openshift-io-v1.html[Groups] with policies defined in the Argo CD Project.
 
-What if those teams are using a modern development workflow and want to use Argo CD to manage the resources in their respective Namespaces? How can you make make that a reality for them? Clearly the `foo` user is unable to use Argo CD in this default state.
-
-In this section you'll provide the `foo` user with access to their very own Project in Argo CD. This Project enables the `foo` user to manage resources in the `project-foo` Namespace. You'll do this using the https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects[AppProject CRD].
-
-. Return to the browser window/session where you are logged in as the `opentlc-mgr` user.
-. Run the following commands in the OpenShift Web Terminal to clone your fork of the workshop repository:
-+
-[source,bash]
-----
-export GITHUB_USERNAME=replace-this
-
-git clone https://github.com/$GITHUB_USERNAME/rht-summit-2023-gitops-cluster-mgmt
-
-cd rht-summit-2023-gitops-cluster-mgmt
-----
-. Change directory to the _rbac/groups_ directory and apply the Group resources:
-+
-[source,bash]
-----
-oc apply -f rbac/groups/group.developers.yaml -f rbac/groups/group.operations.yaml
-----
-
-Before moving on and seeing the effects of these resources, review the _https://github.com/evanshortiss/rht-summit-2023-gitops-cluster-mgmt/blob/main/argocd-projects/group.developers.yaml[group.developers.yaml]_ and _https://github.com/evanshortiss/rht-summit-2023-gitops-cluster-mgmt/blob/main/argocd-projects/group.operations.yaml[group.operations.yaml]_ files. These are simple https://docs.openshift.com/container-platform/4.12/rest_api/user_and_group_apis/group-user-openshift-io-v1.html[Group CRs] that define a list of Users that are part of a Group. The _group.developers.yaml_ file defines a Group named `application-dev` that contains just the `foo` user. The _group.operations.yaml_ file defines a Group named `application-ops` that contains just the `bar` user. 
-
-[NOTE]
-====
-You could add more users to the `users` list in either of these resources if you wanted to in the future. For the purposes of this workshop we need only small groups. Realistically, you'd probably add multiple users to a group.
-====
-
-Next, take a look at the _https://github.com/evanshortiss/rht-summit-2023-gitops-cluster-mgmt/blob/main/argocd-projects/app-project.foo-dev.yaml[app-project.foo-dev.yaml]_ file - it's important and contains various comments explaining what it does! The main thing to take away is that it:
-
-    * Creates an https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects[AppProject].
-    * Supports multiple `destinations` (target clusters), though there's only one defined in this example; the local cluster into which it has been applied.
-    * Limits the target Namespaces to `project-memes-dev` and `project-memes-prod`, and *does not* whitelist any cluster-scoped resources. This is important; we want to restrict this project to managing only resources in a the defined Namespaces and not at the cluster-level!
-    * Defines two roles: `foo-development` and `foo-operations`. Users in the `application-dev` and `application-ops` Groups created previously are associated with these, respectively.
-    * Defines independent RBAC policies for the `foo-development` and `foo-operations` roles.
-
-Create the *AppProject* by returning to the OpenShift Web Terminal and applying the _app-project.foo-dev.yaml_:
-
-[source,bash]
-----
-oc apply -f argocd-projects/app-project.foo-dev.yaml
-----
-
-== Verify the AppProject and RBAC Rules
-
-Now it's time to verify the AppProject, Group, and the roles and policies were applied as expected. 
-
-First, you'll need to log out and log in again to make sure the Group/RBAC changes are detected and applied by the Argo CD instance:
-
-. Return to the private browser session where you had logged into the Argo CD dashboard as the `foo` user.
-. Logout of the Argo CD dashboard using the *Log out* button in the top-right. The login page should be displayed.
-. Click the *Log in via OpenShift* button and sign in:
-    * Select the *standard-users* provider.
-    * Use the username: `foo`.
-    * Use the password: `foopassword`.
-    * Click the *Log in* button.
-
-Confirm that Argo CD can see that the `foo` user is a member of the `application-dev` Group:
-
-. Click the *User Info* icon on the left-hand menu in the Argo CD dashboard.
-. Confirm that the `foo` user's info shows that they're part of the `application-dev` Group:
-+
-image:images/ex6.argocd-user-info.png[]
-
-Next, confirm the AppProject and roles:
-
-. Click on the *Settings* (cog/wheel) icon on the left-hand menu in the Argo CD dashboard.
-. Select *Projects* from the list of items. A `project-memes` Project should be listed.
-. Click on the `project-memes` item in the Project list.
-. Switch to the *Roles* tab and confirm that the `memes-development` and `memes-operations` items are listed.
-. Click on the `memes-development` role. An overlay should appear.
-+
-image:images/ex6.argocd-roles-policy.png[]
-. Confirm that the the *Groups* section in the overlay shows that the users in the `application-dev` Group are bound to `memes-development` role in this Argo CD (App)Project.
+As you might have guessed, this requires defining some more YAML resources and will be managed with another Argo CD application. You might be starting to think that it's tedious to set up each Application one-by-one. In the next section you'll learn how to use the https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/[App of Apps Pattern] to bootstrap your cluster with all your Applications.
 
 == Summary
 
-In this section you learned:
+In this section you learned that Argo CD enforces RBAC for Projects. This might seem trivial, but it's an important step in understanding how to manage your cluster.
 
-* That Argo CD enforces RBAC for Projects.
-* How to define custom Groups, and add OpenShift users to those Groups.
-* How to create custom Projects, Roles, and Policies in Argo CD using *AppProject* CRs.
-
-In the next section you'll learn how to implement continuous deployment for a containerised application using Argo CD.
+In the next section you'll use the *App of Apps Pattern* to setup RBAC and Projects. This will enable your developers to leverage Argo CD to continuously deliver their applications!

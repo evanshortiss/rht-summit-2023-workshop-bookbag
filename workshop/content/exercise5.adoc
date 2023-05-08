@@ -6,7 +6,7 @@
 
 Argo CD is capable healing resources when it detects configuration drift. For example, when a resource that should be present is missing it will be recreated by Argo CD. Another example is when a field such as `spec.replicas` on a Deployment has a value mismatch between what's stored in the Git repository and the actual value set on the resource in the cluster.
 
-If your Argo CD Application has the `selfHeal` property set to `true` then it will automatically detect and correct configuration drift. That means if someone accidentally runs a `kubectl` command against the wrong resource Argo CD will have your back and will restore the resource to the correct configuration!
+If your Argo CD Application has the `selfHeal` property set to `true` then it will automatically detect and correct configuration drift for the resources it is managing. That means if someone accidentally runs a `kubectl` command against the wrong resource Argo CD will have your back and will restore the resource to the correct configuration!
 
 == Observing Argo CD Self-Healing
 

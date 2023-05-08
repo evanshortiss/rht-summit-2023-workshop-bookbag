@@ -7,6 +7,10 @@
 
 Now that you've gotten access to your OpenShift cluster and confirmed that the Red Hat OpenShift GitOps components are up and running, it's time to access the Argo CD dashboard. Since Red Hat OpenShift GitOps is based on the upstream Argo CD project it'll feel familiar if you've used the upstream project before.
 
+The Argo CD instance used in this workshop is deployed in the same OpenShift cluster that you'll be customising and deploying applications into, as shown in the following image. It's possible to deploy Argo CD on a separate cluster, but that's outside the scope of this workshop.
+
+image:images/ex2.openshift-argo.png[]
+
 The Argo CD dashboard supports logins via the OAuth identity providers registered with the OpenShift cluster, or login via the Argo CD `admin` user and password. In this section you'll be using the Argo CD `admin` user.
 
 [NOTE]
@@ -35,8 +39,14 @@ image:images/ex2.openshift-terminal-argo-secret.png[]
 
 You can view the `admin` user's password using the OpenShift Web Console instead of the Web Terminal by:
 
-. Selecting the **Administrator** perspective from the side-menu.
-. Selecting _openshift-gitops_ in the *Project* dropdown.
+. Selecting the **Administrator** perspective from the top of the side-menu.
+. Expanding the *Workloads* section and selecting *Secrets* in the side-menu.
+. Selecting `openshift-gitops` in the *Project* dropdown.
++
+[NOTE]
+====
+If the `openshift-gitops` project isn't listed, make sure to enable the *Show default projects* toggle in the *Project* dropdown.
+====
 . Clicking to **Workloads > Secrets** link in the side-menu.
 . Viewing the _openshift-gitops-cluster_ Secret, and clicking **Reveal Values**.
 

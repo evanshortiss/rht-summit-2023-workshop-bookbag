@@ -19,7 +19,7 @@ modules:
     name: Self-Healing features of Argo CD
     exit_sign: Continue
   exercise6:
-    name: Managing Projects and RBAC in Argo CD
+    name: Exploring Projects and RBAC in Argo CD
     exit_sign: Continue
   exercise7:
     name: Continuous Delivery of a Containerised Application
