@@ -3,9 +3,11 @@
 
 👨‍💻 _Role: Developer_
 
-The moment of truth! Time to stretch your developer legs as the `foo` user, and have Argo CD continuously deploy your application into the development environment. In this section your no longer acting as a cluster administrator, but are instead acting playing the role of the developer that you've been configuring access for up to this point.
+The moment of truth! Time to stretch your developer legs as the `foo` user, and have Argo CD continuously deploy your application into the development environment that was setup in prior sections. 
 
-For this section of the workshop you'll be using https://github.com/evanshortiss/rht-summit-2023-sample-application[this repository on GitHub]. The linked repository contains a simple Node.js web application that renders a web page containing a randomly chosen meme. The repository also contains a set of resources in the _k8s/_ directory that will be used to deploy the application on OpenShift. You're going to deploy this application into the `project-memes-dev` namespace, then make an update to the application that passes CI checks and observe how Argo CD detects the new changes and automatically deploys them to complete the CI/CD flow.
+In this section you're no longer acting as a cluster administrator, but are instead acting playing the role of the `foo` developer that you've been configuring access for up to this point.
+
+For this section of the workshop you'll be using https://github.com/evanshortiss/rht-summit-2023-sample-application[this repository on GitHub]. The linked repository contains a simple web application that renders a web page containing a randomly chosen meme. The repository also contains a set of resources in the _k8s/_ directory that will be used to deploy the application on OpenShift. You're going to deploy this application into the `project-memes-dev` namespace, then make an update to the application Git repository that runs a CI pipeline, and observe how Argo CD detects the new changes and automatically deploys them to complete the CI/CD flow.
 
 [NOTE]
 ====
@@ -31,16 +33,17 @@ image::images/ex6.openshift-ui-argo-link.png[]
 
 == Create the Random Meme Application
 
-As the `foo` user, you have permission to create an Application that targets the `project-memes-dev` Namespace in the `in-cluster` destination. You observed this in the prior exercise by viewing the `project-memes` in the *Projects* section in the *Settings* screen.
+The `foo` user now has permission to create an Application that targets the `project-memes-dev` Namespace in the `in-cluster` destination. You observed this in the prior exercise by viewing the `project-memes` in the *Projects* section in the *Settings* screen.
 
-image:images/ex7.argocd-project-settings.png[]
+image:images/ex8.argocd-project-settings.png[]
 
 Create an Argo CD Application to manage your containerised random meme web application:
 
 . Visit the https://github.com/evanshortiss/rht-summit-2023-sample-application[random-meme application repository].
-. Click the *Use this template* button and select *Create a new repository* from the list of options. Enter `rht-summit-2023-sample-application` as the repository name.
+. Click the *Use this template* button, and select *Create a new repository* from the list of options that are displayed.
+. Enter `rht-summit-2023-sample-application` as the repository name.
 +
-image:images/ex7.gh-use-template.png[]
+image:images/ex8.gh-use-template.png[]
 . Navigate to the Argo CD dashboard.
 . Click the *New App* button. 
 . Fill in the form with the following information:
@@ -49,18 +52,18 @@ image:images/ex7.gh-use-template.png[]
     * Sync Policy: `Automatic`
     * Prune Resources: `Enabled`
     * Self Heal: `Enabled`
-    * Repository URL: `https://github.com/REPLACE_ME/rht-summit-2023-sample-application` (use your repositories URL!)
+    * Repository URL: `https://github.com/REPLACE_ME/rht-summit-2023-sample-application` (use your repository's URL!)
     * Path: `k8s/overlays/development`
     * Cluster URL: `https://kubernetes.default.svc`
-    * Namespace: `project-foo` (Using any other value will result in an error. Feel free to try a different value to see what happens!)
+    * Namespace: `project-memes-dev` (Using any other value will result in an error. Feel free to try a different value to see what happens!)
 . After filling out these details you can switch to the YAML view and confirm that it matches this screenshot:
 +
-image:images/ex7.argocd-application-yaml.png[]
+image:images/ex8.argocd-application-yaml.png[]
 . Click the *Create* button.
 
 The Application creation should be a success, and a new *random-meme* Application tile should be shown in the Argo CD dashboard. Clicking on the tile reveals the Application details. It should have synchronised successfully.
 
-image:images/ex7.argocd-random-meme-application.png[]
+image:images/ex8.argocd-random-meme-application.png[]
 
 == Test the Containerised Application
 
@@ -72,10 +75,12 @@ Now that your containerised application has been deployed, go see what it does!
 . Select the `project-memes-dev` from the *Project* dropdown.
 . Click on the Node.js application in the topology. The application's details will appear on the right.
 +
-image:images/ex7.openshift-topology.png[]
+image:images/ex8.openshift-topology.png[]
 . Scroll down and click on the URL in the *Routes* section. A new browser tab will open and display a meme.
 +
-image:images/ex7.random-meme.png[]
+image:images/ex8.random-meme.png[]
+
+Excellent, you've just deployed a containerised application using Argo CD!
 
 == Making a Code Change and Triggering the Continuous Integration (CI) Process 
 
@@ -90,24 +95,34 @@ Nice work on getting the application deployed on OpenShift! Now you'll make a ch
     * Click the green *Switch to branch* button when promoted.
 . Use the following image as a guide for completing the prior steps:
 +
-image:images/ex7.gh-new-branch.png[]
+image:images/ex8.gh-new-branch.png[]
 . Add a new image to the _k8s/overlays/development/config-map.yaml_ file. You can use the URL of any image that you like.
++
+[NOTE]
+====
+The URL of the image must resolve to an image file, and not a page that contains the image. If the URL ends in an extension such as `.png` or `.jpg` then it'll likely resolve directly to an image.
+====
 . Select the *Source Control* view from the side-menu.
 . Enter a commit message and push your change. 
 +
-image:images/ex7.gh-diff-commit.png[]
+image:images/ex8.gh-diff-commit.png[]
 
-This new branch can be used to create a pull request. The pull request will invoke a CI process, after which the code change can be merged to the `main` (production) branch.
+This new branch can be used to create a pull request. Creating the pull request will invoke a CI process, after which the code change can be merged to the `main` branch.
+
+[NOTE]
+====
+It's common to use a https://trunkbaseddevelopment.com/[trunk-based development model] with Argo CD. That's why your pull request targets the `main` branch, and not a `development` or `staging` branch. The _k8s/overlays_ directory contains a unique configuration for each environment. Since the application is containerised, each of the _k8s/overlays_ (i.e environments) can be updated to point to a specific container image tag etc.
+====
 
 . Return to *your fork* of the https://github.com/evanshortiss/rht-summit-2023-sample-application[random-meme application repository].
 . It should display a message that your `new-meme` branch had changes, and it suggests opening a pull request.
 +
-image:images/ex7.gh-pr-notice.png[]
+image:images/ex8.gh-pr-notice.png[]
 . Click on the *Compare & pull request* button.
 . On the *Open a pull request* screen, scroll down and click the *Create pull request* button.
 . Approve the pending checks if prompted, then wait for them to complete.
 +
-image:images/ex7.gh-pr-open.png[]
+image:images/ex8.gh-pr-open.png[]
 . Do not merge the pull request yet.
 
 
@@ -134,10 +149,10 @@ Once the pull request has been merged, take a look in the Argo CD dashboard. The
 
 [NOTE]
 ====
-You can use the *Refresh* button in Argo CD to force it to check the Git repository for changes, if you don't want to wait.
+You can use the *Refresh* button in Argo CD to force it to check the Git repository for changes, if you don't want to wait. If you set the sync configuration to "Automated", then as soon as the refresh completes it will trigger a sync for the new changes.
 ====
 
-image:images/ex7.argo-post-merge.png[]
+image:images/ex8.argo-post-merge.png[]
 
 Once your new commit has been synchronised by Argo CD, your meme will be available to view. Follow the steps from the *Test the Containerised Application* to find the URL for your application. Refresh the page a few times and your meme will eventually be shown, all with zero downtime or manual processes beyond approving a pull request! 
 
@@ -148,7 +163,7 @@ You can further confirm that the new ConfigMap has been synchronised by:
 . Clicking on the *images-json* ConfigMap in the *Application Details Tree*.
 . Scrolling down in the overlay that appears and confirming your new image URL is listed in the *Live Manifest* YAML.
 
-image:images/ex7.argocd-live-manifest.png[]
+image:images/ex8.argocd-live-manifest.png[]
 
 == Summary
 

@@ -22,10 +22,10 @@ modules:
     name: Exploring Projects and RBAC in Argo CD
     exit_sign: Continue
   exercise7:
-    name: Continuous Delivery of a Containerised Application
-    exit_sign: Continue
-  exercise8:
     name: 'Cluster Bootstraping: The App of Apps'
+    exit_sign: Continue
+  exercise8: 
+    name: Continuous Delivery of a Containerised Application
     exit_sign: Continue
   review:
     name: Review

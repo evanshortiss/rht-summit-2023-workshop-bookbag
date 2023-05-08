@@ -1,5 +1,5 @@
 // Managing Namespaces using OpenShift GitOps
-⏱️ _Estimated Time: 20 Minutes_
+⏱️ _Estimated Time: 15 Minutes_
 
 👨‍💻 _Role: Cluster Administrator_
 

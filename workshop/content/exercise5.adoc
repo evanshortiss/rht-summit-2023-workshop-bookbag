@@ -1,8 +1,8 @@
 // Self-healing exercise
 
-⏱️ _Estimated Time: 5-10 Minutes_
+⏱️ _Estimated Time: 5 Minutes_
 
-👨‍💻 _Role: Cluster Administrator and/or Developers_
+👩‍💻 _Role: Cluster Administrator and/or Developers_
 
 Argo CD is capable healing resources when it detects configuration drift. For example, when a resource that should be present is missing it will be recreated by Argo CD. Another example is when a field such as `spec.replicas` on a Deployment has a value mismatch between what's stored in the Git repository and the actual value set on the resource in the cluster.
 

@@ -1,6 +1,6 @@
 // Creating a project with custom RBAC
 
-⏱️ _Estimated Time: 15 Minutes_
+⏱️ _Estimated Time: 5 Minutes_
 
 👨‍💻 _Role: Cluster Administrator_
 
